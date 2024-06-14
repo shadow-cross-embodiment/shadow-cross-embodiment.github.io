@@ -48,9 +48,9 @@
     <div class="container" id="main">
         <div class="row">
             <h2 class="col-md-12 text-center">
-                <b>SHADOW</b>: Leveraging Segmentation Masks for  Cross-Embodiment Policy Transfer<br />
+                <b>SHADOW: Leveraging Segmentation Masks for  Cross-Embodiment Policy Transfer</b><br />
                 <small>
-                Submitted to CoRL 2024
+                <!-- Submitted to CoRL 2024 -->
                 </small>
             </h2>
         </div>
@@ -77,10 +77,18 @@
                 <h1>
                     Videos of real world experiments
                 </h1>
+
+
+
+
                 <h3>
                     Real World - Different Robot
                 </h3>
                
+                <p class="text-justify">
+                    These are evaluation roll-outs on the source (Panda robot + Robotiq gripper), and the target (UR5e robot + Robotiq gripper). Compared to the strongest baseline (Mirage), Shadow achieves an additive increase in success rate on the target robot of +30%, +40%, +61%, and +38% over the Mug, Blocks, Cups, and Hexagon tasks, respectively. Videos at 1x speed unless otherwise specified.
+                 </p> 
+
                 <video id="v0" width="100%" autoplay loop muted>
                   <source src="img/diff_robot_final.mov" type="video/mp4" />
                 </video>
@@ -93,6 +101,10 @@
                 <h3>
                     Real World - Different Gripper
                 </h3>
+
+                <p class="text-justify">
+                    These are evaluation roll-outs on the source (Panda robot + Robotiq gripper), and the target (Panda robot + Franka gripper). Compared to the strongest baseline (Mirage), Shadow achieves an additive increase in success rate on the target robot of +72%, +21%, +18%, and +37% over the Mug, Blocks, Cups, and Hexagon tasks, respectively. Videos at 1x speed unless otherwise specified.
+                 </p> 
                
                 <video id="v0" width="100%" autoplay loop muted>
                   <source src="img/diff_gripper_final.mov" type="video/mp4" />
