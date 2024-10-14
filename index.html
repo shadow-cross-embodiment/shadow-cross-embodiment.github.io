@@ -1,206 +1,279 @@
-
 <!DOCTYPE html>
 <html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Shadow: Leveraging Segmentation Masks for Zero-Shot Cross-Embodiment Policy Transfer">
+  <meta name="keywords" content="Cross-Embodiment Learning">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shadow: Leveraging Segmentation Masks for Zero-Shot Cross-Embodiment Policy Transfer</title>
 
-<head lang="en">
-    <meta charset="UTF-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script> -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
 
-    <title>SHADOW</title>
+    function gtag() {
+      dataLayer.push(arguments);
+    }
 
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    gtag('js', new Date());
 
-    <meta property="og:image:type" content="image/png">
-    <meta property="og:image:width" content="1296">
-    <meta property="og:image:height" content="840">
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="SHADOW: Leveraging Segmentation Masks for Zero-Shot Cross-Embodiment Policy Transfer" />
-    <meta property="og:description" content="description here" />
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="SHADOW: Leveraging Segmentation Masks for Zero-Shot Cross-Embodiment Policy Transfer" />
-    <meta name="twitter:description" content="description" />
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
 
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.png">
 
-<!-- <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>"> -->
-<link rel="shortcut icon" type="image/x-icon" href="./img/favicon.png?">
-
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.css">
-    <link rel="stylesheet" href="css/app.css">
-
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.3/clipboard.min.js"></script>
-    
-    <script src="js/app.js"></script>
-    <script src="js/video_comparison.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
 </head>
-
 <body>
-    <div class="container" id="main">
-        <div class="row">
-            <h2 class="col-md-12 text-center">
-                <b>SHADOW: Leveraging Segmentation Masks for  Cross-Embodiment Policy Transfer</b><br />
-                <small>
-                <!-- Submitted to CoRL 2024 -->
-                </small>
-            </h2>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Shadow: Leveraging Segmentation Masks for Zero-Shot Cross-Embodiment Policy Transfer</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://www.linkedin.com/in/marion-lepert/">Marion Lepert</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://www.linkedin.com/in/riadoshi/">Ria Doshi</a><sup>2</sup>,</span>
+            <span class="author-block">
+              <a href="https://web.stanford.edu/~bohg/">Jeannette Bohg</a><sup>1</sup>,
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Stanford University,</span>
+            <span class="author-block"><sup>2</sup>UC Berkeley</span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><b>CoRL 2024</b></span>
+          </div>
+
+          <!-- <div class="column has-text-centered"> -->
+            <!-- <div class="publication-links"> -->
+              <!-- PDF Link. -->
+              <!-- <span class="link-block">
+                <a href="https://arxiv.org/pdf/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span> -->
+              <!-- <span class="link-block">
+                <a href="https://arxiv.org/abs/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span> -->
+              <!-- Video Link.
+              <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span> -->
+
+
+            <!-- </div> -->
+
+          <!-- </div> -->
         </div>
-        <div class="row">
-
-        </div>
-
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <h1>
-                    Abstract
-                </h1>
-                
-                <p class="text-justify">
-                    Data collection in robotics is spread across diverse hardware, and this variation will increase as new hardware is developed. Effective use of this growing body of data requires methods capable of learning from diverse robot embodiments. We consider the setting of training a policy using expert trajectories from a single robot arm (the <i>source</i>), and evaluating on a different robot arm for which no data was collected (the <i>target</i>). We present a data editing scheme termed <b>Shadow</b>, in which the robot during training and evaluation is replaced with a composite segmentation mask of the source and target robots. In this way, the input data distribution at train and test time match closely, enabling robust policy transfer to the new unseen robot while being far more data efficient than approaches that require co-training on large amounts of data from diverse embodiments. We demonstrate that an approach as simple as Shadow is effective both in simulation on varying tasks and robots, and on real robot hardware, where Shadow demonstrates an average of over 2x improvement in success rate compared to the strongest baseline.                
-                </p> <br />
-                <image src="img/plot_teaser.png" class="img-responsive" alt="overview"><br>
-            </div>
-        </div>
-
-
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <h1>
-                    Videos of real world experiments
-                </h1>
-
-
-
-
-                <h3>
-                    Real World - Different Robot
-                </h3>
-               
-                <p class="text-justify">
-                    These are evaluation roll-outs on the source (Panda robot + Robotiq gripper), and the target (UR5e robot + Robotiq gripper). Compared to the strongest baseline (Mirage), Shadow achieves an additive increase in success rate on the target robot of +30%, +40%, +61%, and +38% over the Mug, Blocks, Cups, and Hexagon tasks, respectively. Videos at 1x speed unless otherwise specified.
-                 </p> 
-
-                <video id="v0" width="100%" autoplay loop muted>
-                  <source src="img/diff_robot_final.mov" type="video/mp4" />
-                </video>
-              
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <h3>
-                    Real World - Different Gripper
-                </h3>
-
-                <p class="text-justify">
-                    These are evaluation roll-outs on the source (Panda robot + Robotiq gripper), and the target (Panda robot + Franka gripper). Compared to the strongest baseline (Mirage), Shadow achieves an additive increase in success rate on the target robot of +72%, +21%, +18%, and +37% over the Mug, Blocks, Cups, and Hexagon tasks, respectively. Videos at 1x speed unless otherwise specified.
-                 </p> 
-               
-                <video id="v0" width="100%" autoplay loop muted>
-                  <source src="img/diff_gripper_final.mov" type="video/mp4" />
-                </video>
-              
-            </div>
-        </div>
-
-
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <h3>
-                    Simulation Videos
-                </h3>
-
-                <p class="text-justify">
-                    For each task, we show evaluation roll-outs on the source (Panda robot + Robotiq gripper), and each target robot with either the Robotiq gripper or the Franka gripper. 
-                    For each target robot, we show the raw image input, and the Shadow-edited image (i.e., the overlay of the source and target segmentation masks).
-                    <br><br>
-                    All models except for the "Mug Cleanup" task were trained using 84x84 images. Models for the "Mug Cleanup" task were trained using 240x240 images.
-                 </p> 
-               
-                <video id="v0" width="100%" autoplay loop muted>
-                  <source src="img/sim_stack_three.m4v" type="video/mp4" />
-                </video>
-              
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-              
-                <video id="v0" width="100%" autoplay loop muted>
-                  <source src="img/sim_stack.m4v" type="video/mp4" />
-                </video>
-              
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-              
-                <video id="v0" width="100%" autoplay loop muted>
-                  <source src="img/sim_can.m4v" type="video/mp4" />
-                </video>
-              
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-              
-                <video id="v0" width="100%" autoplay loop muted>
-                  <source src="img/sim_coffee.m4v" type="video/mp4" />
-                </video>
-              
-            </div>
-        </div>
-
-
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-              
-                <video id="v0" width="100%" autoplay loop muted>
-                  <source src="img/sim_kitchen.m4v" type="video/mp4" />
-                </video>
-              
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-              
-                <video id="v0" width="100%" autoplay loop muted>
-                  <source src="img/sim_mug_cleanup.m4v" type="video/mp4" />
-                </video>
-              
-            </div>
-        </div>
-
-        
-
-
-
-
-
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <!-- <h3>
-                    Acknowledgements
-                </h3> -->
-                <p class="text-justify">
-                
-                    <br><br>
-                </p>
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="./static/images/plot_teaser.png"
+      class="interpolation-image"
+      alt="Interpolate start reference image."/>
+      <!-- <h2 class="subtitle has-text-centered">
+        Caption.
+      </h2> -->
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="section">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <!-- <div class="columns is-centered has-text-centered"> -->
+        <div class="row">
+          <!-- <h2 class="title is-3">Abstract</h2> -->
+          <div class="content has-text-justified">
+            <p>
+              Data collection in robotics is spread across diverse hardware, and this variation will increase as new hardware is developed. Effective use of this growing body of data requires methods capable of learning from diverse robot embodiments. We consider the setting of training a policy using expert trajectories from a single robot arm (the <i>source</i>), and evaluating on a different robot arm for which no data was collected (the <i>target</i>). We present a data editing scheme termed <b>Shadow</b>, in which the robot during training and evaluation is replaced with a composite segmentation mask of the source and target robots. In this way, the input data distribution at train and test time match closely, enabling robust policy transfer to the new unseen robot while being far more data efficient than approaches that require co-training on large amounts of data from diverse embodiments. We demonstrate that an approach as simple as Shadow is effective both in simulation on varying tasks and robots, and on real robot hardware, where Shadow demonstrates an average of over 2x improvement in success rate compared to the strongest baseline.                
+            </p>
+          </div>
+        </div>
+      <!-- </div> -->
+      <!--/ Abstract. -->
+    </div>
+  </section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <!-- Section Title -->
+    <h2 class="title">Real-world experiments</h2>
+
+      <!-- Visual Effects. -->
+      <div class="row">
+        <div class="content">
+          <h5 class="title is-5">Different Robot</h5>
+          <p>
+            These are evaluation roll-outs on the source (Panda robot + Robotiq gripper), and the target (UR5e robot + Robotiq gripper). Compared to the strongest baseline (Mirage), Shadow achieves an additive increase in success rate on the target robot of +30%, +40%, +61%, and +38% over the Mug, Blocks, Cups, and Hexagon tasks, respectively. Videos at 1x speed unless otherwise specified.
+          </p>
+          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/diff_gripper_final.mov"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <!--/ Visual Effects. -->
+
+      <!-- Visual Effects. -->
+      <div class="row mt-6">
+        <div class="content">
+          <h5 class="title is-5">Different Gripper</h5>
+          <p>
+            These are evaluation roll-outs on the source (Panda robot + Robotiq gripper), and the target (Panda robot + Franka gripper). Compared to the strongest baseline (Mirage), Shadow achieves an additive increase in success rate on the target robot of +72%, +21%, +18%, and +37% over the Mug, Blocks, Cups, and Hexagon tasks, respectively. Videos at 1x speed unless otherwise specified.
+          </p>
+          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/diff_robot_final.mov"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <!--/ Visual Effects. -->
+
+  </div>
+</section>
+
+
+
+
+<section class="section">
+    <div class="container is-max-desktop">
+  
+      <!-- Section Title -->
+      <h2 class="title">Simulation experiments</h2>
+  
+        <!-- Visual Effects. -->
+        <div class="row">
+          <div class="content">
+            <!-- <h5 class="title is-5">Different Robot</h5> -->
+            <p class="text-justify">
+                For each task, we show evaluation roll-outs on the source (Panda robot + Robotiq gripper), and each target robot with either the Robotiq gripper or the Franka gripper. 
+                For each target robot, we show the raw image input, and the Shadow-edited image (i.e., the overlay of the source and target segmentation masks).
+                <br><br>
+                All models except for the "Mug Cleanup" task were trained using 84x84 images. Models for the "Mug Cleanup" task were trained using 240x240 images.
+             </p> 
+            <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+              <source src="./static/videos/sim_stack_three.m4v"
+                      type="video/mp4">
+            </video>
+            <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+                <source src="./static/videos/sim_stack.m4v"
+                        type="video/mp4">
+            </video>
+            <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+                <source src="./static/videos/sim_can.m4v"
+                        type="video/mp4">
+            </video>
+            <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+                <source src="./static/videos/sim_coffee.m4v"
+                        type="video/mp4">
+            </video>
+            <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+                <source src="./static/videos/sim_kitchen.m4v"
+                        type="video/mp4">
+            </video>
+            <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+                <source src="./static/videos/sim_mug_cleanup.m4v"
+                        type="video/mp4">
+            </video>
+          </div>
+        </div>
+        <!--/ Visual Effects. -->
+
+  
+    </div>
+  </section>
+
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@inproceedings{lepert2024shadow,
+        title={Shadow: Leveraging Segmentation Masks for Zero-Shot Cross-Embodiment Policy Transfer},
+        author={Marion Lepert and Ria Doshi and Jeannette Bohg},
+        booktitle = {Conference on Robot Learning (CoRL)},
+        address  = {Munich, Germany},
+        year = {2024},
+  }</code></pre>
+    </div>
+  </section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-3">
+        <div class="content">
+          <p>
+            Website templated adapted from <a
+              href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>
